@@ -3,7 +3,6 @@
 @brief 動画からキャリブレーションに回すための画像を切り出す
 
 @author Shunsuke Hishida / created on 2021/05/26
-@copyright (c) 2021 Global Walkers,inc All rights reserved.
 """
 import os
 
@@ -13,7 +12,7 @@ from tqdm import tqdm
 from config.cfg_manager import ReadMovie2Img
 
 
-def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext="jpg"):
+def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext):
     """
     @brief 一定間隔に切り出す
     """
@@ -38,7 +37,7 @@ def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext="jpg
         else:
             break
 
-def cutAll(cap, output_dir, ext="jpg"):
+def cutAll(cap, output_dir, ext):
     """
     @brief 全フレーム切り出す
     """
@@ -66,10 +65,11 @@ def cutImg(movie_path, output_dir, config):
     raspiカメラで撮影したデータは cap.get(cv2.CAP_PROP_FRAME_COUNT)で総フレーム数を取得できない
     よって現状はこの処理を省いている
     """
+    os.makedirs(output_dir, exist_ok=True)
     if config.getCutFlag:
-        cutAll(cap, output_dir)
+        cutAll(cap, output_dir, config.extension)
     else:
-        cutIntervally(cap, config.start_time, config.end_time, config.output_number, output_dir)
+        cutIntervally(cap, config.start_time, config.end_time, config.output_number, output_dir, config.extension)
     print("DONE")
 
 if __name__ == "__main__":

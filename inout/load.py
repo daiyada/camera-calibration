@@ -3,14 +3,13 @@
 @brief ファイルのloadを行う
 
 @author Shunsuke Hishida / created 2021/04/16
-@copyright (c) 2021 GlobalWalkers,inc All rights reserved.
 """
 import os
 import yaml
 
 import cv2
 
-class Load(object):
+class Loader(object):
 
     def __init__(self, path):
         """Contructor"""

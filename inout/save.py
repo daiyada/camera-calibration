@@ -3,7 +3,6 @@
 @brief ファイルのsave行う
 
 @author Shunsuke Hishida / created 2021/04/09
-@copyright (c) 2021 GlobalWalkers,inc All rights reserved.
 """
 import os
 import shutil
@@ -11,7 +10,7 @@ import zipfile
 
 from tqdm import tqdm
 
-class Save(object):
+class Saver(object):
     """
     @brief ファイルのsaveを行うクラス
     """
