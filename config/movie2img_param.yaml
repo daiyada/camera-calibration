@@ -1,5 +1,7 @@
+type:
+  cut_flag: 1          # 1 -> Cut all frames, 0 -> Cut intervally
 time:
   start_time: 20      # unit: second
-  end_time: 60        # unit: second
+  end_time: 70        # unit: second
 number:
-  output_sheets: 30   # unit: sheets
+  output_sheets: 20   # unit: sheets
