@@ -1,0 +1,9 @@
+square_size: 2.0          # unit [cm]
+cross_point:            # calibration用チェッカーボードのマスの数
+  horizontal: 7
+  vertical: 9
+img:
+  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/calibration_img"
+  extension: "jpg"
+output:
+  file_name: calibration_param    # 求めたcalibration用paramterを書き出すファイルの名前

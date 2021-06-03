@@ -1,7 +1,0 @@
-square_size: 20          # unit [mm]
-pattern_size:            # calibration用チェッカーボードのマスの数
-  horizontal: 6
-  vertical: 9
-img:
-  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/calibration_img"
-  extension: "jpg"

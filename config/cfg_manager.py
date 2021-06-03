@@ -43,20 +43,26 @@ class ReadMovie2Img(object):
         self.__cut_flag = bool(int(self.__yaml_data["cut_flag"]))
         self.__extension = str(self.__yaml_data["extension"])
 
-class ReadCalibration(object):
-    PATH = os.path.join(os.getcwd(), "config", "calibration_param.yaml")
+class ReadCalculation(object):
+    PATH = os.path.join(os.getcwd(), "config", "calculation_param.yaml")
+
+    @classmethod
+    def getYamlPath(cls): return cls.PATH
 
     @property
     def getSquareSize(self): return self.__square_size
 
     @property
-    def getPatternSize(self): return self.__pattern_size
+    def getCrossPoint(self): return self.__cross_point
 
     @property
     def getImgDir(self): return self.__img_dir
 
     @property
     def getImgExt(self): return self.__img_ext
+
+    @property
+    def getFileName(self): return self.__file_name
 
     def __init__(self, path):
         """Constructor"""
@@ -67,6 +73,7 @@ class ReadCalibration(object):
     def __deserialize(self):
         """yamlファイルからparamを読み取る"""
         self.__square_size = int(self.__yaml_data["square_size"])
-        self.__pattern_size = tuple(int(self.__yaml_data["vertical"]), int(self.__yaml_data["horizontal"]))
+        self.__cross_point = (int(self.__yaml_data["cross_point"]["vertical"]), int(self.__yaml_data["cross_point"]["horizontal"]))
         self.__img_dir = str(self.__yaml_data["img"]["input_dir"])
         self.__img_ext = str(self.__yaml_data["img"]["extension"])
+        self.__file_name = str(self.__yaml_data["output"]["file_name"])

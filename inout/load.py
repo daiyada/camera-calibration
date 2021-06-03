@@ -5,9 +5,9 @@
 @author Shunsuke Hishida / created 2021/04/16
 """
 import os
-import yaml
 
 import cv2
+import yaml
 
 class Loader(object):
 
