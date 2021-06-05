@@ -36,6 +36,7 @@ def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext):
             cv2.imwrite(os.path.join(output_dir, "{}.{}".format(index, ext)), img)
         else:
             break
+    cap.release()
 
 def cutAll(cap, output_dir, ext):
     """
@@ -49,6 +50,7 @@ def cutAll(cap, output_dir, ext):
             index += 1
         else:
             break
+    cap.release()
 
 def cutImg(movie_path, output_dir, config):
     """
@@ -76,7 +78,7 @@ if __name__ == "__main__":
     # file_name = "video.avi"
     file_name = "video_20210525_11.avi"
     movie_path = os.path.join(os.getcwd(), "movie", file_name)
-    output_dir = os.path.join(os.getcwd(), "calibration_img")
+    output_dir = os.path.join(os.getcwd(), "imgs_for_calc_param")
 
     config = ReadMovie2Img(ReadMovie2Img.getYamlPath())
     cutImg(movie_path, output_dir, config)

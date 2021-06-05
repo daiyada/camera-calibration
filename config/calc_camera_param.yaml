@@ -3,7 +3,7 @@ cross_point:            # calibration用チェッカーボードのマスの数
   horizontal: 7
   vertical: 9
 img:
-  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/calibration_img"
+  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/imgs_for_calc_param"
   extension: "jpg"
 output:
   file_name: calibration_param    # 求めたcalibration用paramterを書き出すファイルの名前

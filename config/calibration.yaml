@@ -1,0 +1,10 @@
+before_calib:
+  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/before"
+  ext:          # input_dir内で処理をかけたいファイルの拡張子を列挙
+    - avi
+    - png
+after_calib:
+  output_dir: ""/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/after
+  movie_mode: 0      # 動画ファイルをcalibrationするとき
+                     # 0: calibrationした動画データのみ生成
+                     # 1: 元の動画と並べて再生するデータを生成

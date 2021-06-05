@@ -58,10 +58,10 @@ class CalcCameraParam(object):
     def execute(self):
         """メイン関数"""
         img_list = glob.glob(os.path.join(self.__param.getImgDir, "*.{}".format(self.__param.getImgExt)))
-        camera_matrix, distortion, rot_vecs, trans_vecs = self.__calcParam(img_list)
+        camera_matrix, distortion, _, _ = self.__calcParam(img_list)
         cpm = ConfigPathMaker(self.__param.getFileName, ext="npz")
         # 計算したparameterをnpzファイルに保存
-        save = Saver(cpm.getPath, camera_matrix=camera_matrix, distortion=distortion, rot_vecs=rot_vecs, trans_vecs=trans_vecs)
+        save = Saver(cpm.getPath, camera_matrix=camera_matrix, distortion=distortion)
         save.saveNpz()
         print("Done!!")
 

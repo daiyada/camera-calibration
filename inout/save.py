@@ -18,6 +18,4 @@ class Saver(object):
             self.__path,
             camera_matrix=self.__data["camera_matrix"],
             distortion=self.__data["distortion"],
-            rot_vecs=self.__data["rot_vecs"],
-            trans_vecs=self.__data["trans_vecs"]
             )

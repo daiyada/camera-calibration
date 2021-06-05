@@ -142,3 +142,9 @@ movie
 
 # calibration_img folder including images for camera calibration
 calibration_img
+
+# Directory including the data before calibrating.
+before
+
+# Directory including the data after calibrating.
+after
