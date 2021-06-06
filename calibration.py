@@ -13,7 +13,7 @@ from config.cfg_manager import ReadCalibration
 from config.cfg_manager import ReadCalibrationParam
 from utils.path import CalibedPathMaker
 from utils.file_manager import FilePathGetter
-
+from movie_cutter import setOutputFormat
 
 class Calibration(object):
 
@@ -30,19 +30,29 @@ class Calibration(object):
         @param img (numpy.ndarray) calibrationする画像
         """
         h, w, _ = img.shape
-        new_camera_matrix, roi = cv2.getOptimalNewCameraMatrix(
-                                    self.__calib_param.getCameraMatrix,
-                                    self.__calib_param.getDistortion,
-                                    (w, h),
-                                    1,
-                                    (w, h))
-        dst = cv2.undistort(img,
-                            self.__calib_param.get.getCameraMatrix,
+        dst = cv2.undistort(
+                            img,
+                            self.__calib_param.getCameraMatrix,
                             self.__calib_param.getDistortion,
-                            None,
-                            new_camera_matrix)
-        x, y, w, h = roi
-        self.__calibrated_img = dst[y:y+h, x:x+w]
+                            None)
+        self.__calibrated_img = dst
+
+def calibrateMovie(calib, path, save_path):
+    """
+    動画データをキャリブレーション
+    """
+    movie = cv2.VideoCapture(path)
+    new_movie = setOutputFormat(movie, save_path)
+    while True:
+        ret, img = movie.read()
+        if ret:
+            calib.execute(img)
+            calibrated_img = calib.getCalibratedImg
+            new_movie.write(calibrated_img)
+        else:
+            break
+    movie.release()
+    new_movie.release()
 
 def main():
     """メイン関数"""
@@ -50,19 +60,23 @@ def main():
     calib = Calibration()
     fpg = FilePathGetter(config.getInputDir, config.getExtension)
     file_list = fpg.getFileList
-    for file_path in tadm(file_list):
+    for file_path in tqdm(file_list):
         file_name, ext = os.path.splitext(os.path.basename(file_path))
-        save_path = CalibedPathMaker(file_name, ext)
-        if ext == "avi" or ext == "mp4" or ext == "wmv":
-            
-        elif ext == "jpg" or ext == "JPG" or ext == "png":
+        cpm = CalibedPathMaker(file_name, ext)
+        save_path = cpm.getPath
+        if ext == ".avi" or ext == ".mp4" or ext == ".wmv":
+            # データが動画のとき
+            calibrateMovie(calib, file_path, save_path)
+            print("動画の保存完了")
+        elif ext == ".jpg" or ext == ".JPG" or ext == ".png":
+            # データが画像のとき
             img = cv2.imread(file_path)
             calib.execute(img)
             calibrated_img = calib.getCalibratedImg
             cv2.imwrite(save_path, calibrated_img)
             print("画像の保存完了")
         else:
-            print("[calibration.py][ERROR]calibrationtaionできるファイルではない")
+            print("[calibration.py][ERROR]calibrationできるファイルではない")
             raise Exception
 
 if __name__ == "__main__":

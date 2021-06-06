@@ -24,4 +24,4 @@ class CalibedPathMaker(object):
     def __init__(self, file_name, ext):
         dir_path = os.path.join(os.getcwd(), "after")
         os.makedirs(dir_path, exist_ok=True)
-        self.__path = os.path.join(dir_path, "{}.{}".format(file_name, ext))
+        self.__path = os.path.join(dir_path, "calibrated_{}.{}".format(file_name, ext))
