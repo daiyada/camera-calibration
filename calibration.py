@@ -56,9 +56,6 @@ def concatatenateMovie(movie1_path, movie2_path, save_path):
             if not format_flag:
                 concatanated_movie = setFormat(movie1, img, save_path)
                 format_flag = True
-            # print("img: ", img.shape)
-            # cv2.imwrite("/home/hishida/Desktop/test.png", img)
-            # input(0)
             concatanated_movie.write(img)
         else:
             break
@@ -93,6 +90,7 @@ def main():
         cpm = CalibedPathMaker(file_path, initial="calibrated")
         save_path = cpm.getPath
         ext = cpm.getExt
+        # HACK: この拡張子の分岐きれいではない。良い方法ないか？？
         if ext == ".avi" or ext == ".mp4" or ext == ".wmv":
             # データが動画のとき
             calibrateMovie(calib, file_path, save_path)
