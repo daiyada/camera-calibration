@@ -43,7 +43,11 @@ def setFormat(movie, img, save_path):
     new_movie = cv2.VideoWriter(save_path, fourcc, fps, (width, height))
     return new_movie
 
-def concatatenateMovie(movie1_path, movie2_path, save_path):
+def concatatenateMovie(movie1_path, movie2_path, save_path, left_title, right_title, color=(255,0,0)):
+    """
+    @param left_title (str) concatenateした際の左側動画タイトル
+    @param right_title (str) concatenateした際の右側動画タイトル
+    """
     movie1 = cv2.VideoCapture(movie1_path)
     movie2 = cv2.VideoCapture(movie2_path)
     format_flag = False
@@ -52,6 +56,12 @@ def concatatenateMovie(movie1_path, movie2_path, save_path):
         ret2, img2 = movie2.read()
         ret = ret1 and ret2
         if ret:
+            cv2.putText(img1, left_title, (10, 30),
+               cv2.FONT_HERSHEY_PLAIN, 1.5,
+               color, 2, cv2.LINE_AA)
+            cv2.putText(img2, right_title, (10, 30),
+               cv2.FONT_HERSHEY_PLAIN, 1.5,
+               color, 2, cv2.LINE_AA)
             img = cv2.hconcat([img1, img2])
             if not format_flag:
                 concatanated_movie = setFormat(movie1, img, save_path)
@@ -99,8 +109,7 @@ def main():
             if config.getMovieMode:
                 print("元動画との連結開始")
                 cpm = CalibedPathMaker(file_path, initial="concatenated")
-                con_save_path = cpm.getPath
-                concatatenateMovie(file_path, save_path, con_save_path)
+                concatatenateMovie(file_path, save_path, cpm.getPath, config.getLeftTitle, config.getRightTitle)
         elif ext == ".jpg" or ext == ".JPG" or ext == ".png":
             # データが画像のとき
             img = cv2.imread(file_path)

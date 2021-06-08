@@ -1,4 +1,4 @@
-start_time: 286      # unit: second
-end_time: 296        # unit: second
-input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/003_camera_test/005_広角_sensorfull_1920_1080/video_20210601_17.avi"
-output_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/003_camera_test/005_広角_sensorfull_1920_1080/"
+start_time: 1720      # unit: second
+end_time: 1730        # unit: second
+input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/003_camera_test/001_広角_640_480/video_20210521_16.avi"
+output_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/003_camera_test/001_広角_640_480/"

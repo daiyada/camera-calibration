@@ -5,3 +5,4 @@ time:
 number:
   output_sheets: 20   # unit: sheets
 extension: "jpg"
+input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/movie/video_20210525_11.avi"

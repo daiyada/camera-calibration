@@ -10,9 +10,10 @@ import cv2
 from tqdm import tqdm
 
 from config.cfg_manager import ReadMovie2Img
+from utils.path import ImgForCalibPathMaker
 
 
-def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext):
+def cutIntervally(cap, start_time, end_time, output_number, ext):
     """
     @brief 一定間隔に切り出す
     """
@@ -33,12 +34,14 @@ def cutIntervally(cap, start_time, end_time, output_number, output_dir, ext):
         cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
         ret, img = cap.read()   # img: (numpy.ndarray)
         if ret:
-            cv2.imwrite(os.path.join(output_dir, "{}.{}".format(index, ext)), img)
+            path_maker = ImgForCalibPathMaker(index, ext)
+            save_path = path_maker.getPath
+            cv2.imwrite(save_path, img)
         else:
             break
     cap.release()
 
-def cutAll(cap, output_dir, ext):
+def cutAll(cap, ext):
     """
     @brief 全フレーム切り出す
     """
@@ -46,19 +49,21 @@ def cutAll(cap, output_dir, ext):
     while True:
         ret, img = cap.read()
         if ret:
-            cv2.imwrite(os.path.join(output_dir, "{}.{}".format(index, ext)), img)
+            path_maker = ImgForCalibPathMaker(index, ext)
+            save_path = path_maker.getPath
+            cv2.imwrite(save_path, img)
             index += 1
         else:
             break
     cap.release()
 
-def cutImg(movie_path, output_dir, config):
+def cutImg():
     """
     @param movie_path (str) 動画ファイルのパス
-    @param output_dir (str) 出力する画像のdirectory
     @param config (class) 出力する画像に関するオプション
     """
-    cap = cv2.VideoCapture(movie_path)
+    config = ReadMovie2Img(ReadMovie2Img.getYamlPath())
+    cap = cv2.VideoCapture(config.getInputPath)
     if not cap.isOpened():
         return
     """
@@ -67,18 +72,18 @@ def cutImg(movie_path, output_dir, config):
     raspiカメラで撮影したデータは cap.get(cv2.CAP_PROP_FRAME_COUNT)で総フレーム数を取得できない
     よって現状はこの処理を省いている
     """
-    os.makedirs(output_dir, exist_ok=True)
+    # os.makedirs(output_dir, exist_ok=True)
     if config.getCutFlag:
-        cutAll(cap, output_dir, config.extension)
+        cutAll(cap, config.getExtension)
     else:
-        cutIntervally(cap, config.start_time, config.end_time, config.output_number, output_dir, config.extension)
+        cutIntervally(
+                    cap,
+                    config.getStartTime,
+                    config.getEndTime,
+                    config.getOutputNumber,
+                    config.getExtension
+                    )
     print("DONE")
 
 if __name__ == "__main__":
-    # file_name = "video.avi"
-    file_name = "video_20210525_11.avi"
-    movie_path = os.path.join(os.getcwd(), "movie", file_name)
-    output_dir = os.path.join(os.getcwd(), "imgs_for_calc_param")
-
-    config = ReadMovie2Img(ReadMovie2Img.getYamlPath())
-    cutImg(movie_path, output_dir, config)
+    cutImg()

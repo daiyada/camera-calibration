@@ -141,10 +141,13 @@ cython_debug/
 movie
 
 # calibration_img folder including images for camera calibration
-calibration_img
+imgs_for_calc_param
 
 # Directory including the data before calibrating.
 before
 
 # Directory including the data after calibrating.
 after
+
+# Npz file including parameters for camera calibration
+config/calibration_param.npz

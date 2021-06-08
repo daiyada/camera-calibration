@@ -31,6 +31,10 @@ class ReadMovie2Img(object):
     @property
     def getExtension(self): return self.__extension
 
+    @property
+    def getInputPath(self): return self.__input_path
+
+
     def __init__(self, path):
         """constructor"""
         self.__load = Loader(path)
@@ -44,6 +48,7 @@ class ReadMovie2Img(object):
         self.__output_number = int(self.__yaml_data["number"]["output_sheets"])
         self.__cut_flag = bool(int(self.__yaml_data["cut_flag"]))
         self.__extension = str(self.__yaml_data["extension"])
+        self.__input_path = str(self.__yaml_data["input_path"])
 
 class ReadCalculation(object):
     PATH = os.path.join(os.getcwd(), "config", "calc_camera_param.yaml")
@@ -93,10 +98,13 @@ class ReadCalibration(object):
     def getExtension(self): return self.__ext
 
     @property
-    def getOutputDir(self): return self.__output_dir
+    def getMovieMode(self): return self.__movie_mode
 
     @property
-    def getMovieMode(self): return self.__movie_mode
+    def getRightTitle(self): return self.__right_title
+
+    @property
+    def getLeftTitle(self): return self.__left_title
 
     def __init__(self, path):
         self.__load = Loader(path)
@@ -106,8 +114,9 @@ class ReadCalibration(object):
     def __deserialize(self):
         self.__input_dir = str(self.__yaml_data["before_calib"]["input_dir"])
         self.__ext = self.__yaml_data["before_calib"]["ext"]
-        self.__output_dir = str(self.__yaml_data["after_calib"]["output_dir"])
         self.__movie_mode = bool(int(self.__yaml_data["after_calib"]["movie_mode"]))
+        self.__left_title = bool(int(self.__yaml_data["after_calib"]["left_title"]))
+        self.__right_title = bool(int(self.__yaml_data["after_calib"]["right_title"]))
 
 class ReadCalibrationParam(object):
     PATH = os.path.join(os.getcwd(), "config", "calibration_param.npz")
