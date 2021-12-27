@@ -4,5 +4,5 @@ time:
   end_time: 70        # unit: second
 number:
   output_sheets: 20   # unit: sheets
-extension: "jpg"
-input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/movie/video_20210525_11.avi"
+extension: "png"
+input_path: "/home/hishida/Downloads/cut_video_20210616_12.avi"

@@ -1,0 +1,15 @@
+concate_type: 0         # -> 0: 2動画を合体、1: 4動画を合体
+arrangement: 1          # -> 0: 縦方向、1:横方向
+input:
+  path_1: "/home/hishida/10_project_in_progress/016_ベローチェ/009_demo/waiting_time/for_concate/id_132_07/cut_id_132_07_cam5.mp4"
+  path_2: "/home/hishida/10_project_in_progress/016_ベローチェ/009_demo/waiting_time/for_concate/id_132_07/cut_id_132_07_cam7.mp4"
+  path_3:
+  path_4:
+output:
+  file_name: "id132_cash_kitchen"
+  path: "/home/hishida/10_project_in_progress/016_ベローチェ/009_demo/waiting_time/for_concate/id_132_07/"
+  ext: "mp4"
+  title_1: "cam5"
+  title_2: "cam7"
+  title_3:
+  title_4:

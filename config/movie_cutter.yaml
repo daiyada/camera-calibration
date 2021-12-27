@@ -1,4 +1,4 @@
-start_time: 29      # unit: second
-end_time: 44       # unit: second
-input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/sample/concatenated_video.avi"
-output_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/sample/"
+start_time:  16      # unit: second
+end_time: 45       # unit: second
+input_path: "/home/hishida/10_project_in_progress/016_ベローチェ/009_demo/waiting_time/for_concate/id_132_07/id_132_07_cam5.mp4"
+output_dir: "/home/hishida/Desktop/"
