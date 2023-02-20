@@ -4,11 +4,17 @@
 
 @author Shunsuke Hishida / created on 2021/05/26
 """
+from enum import IntEnum
 import os
 
 import numpy as np
 
 from inout.load import Loader
+
+class GridPattern(IntEnum):
+    CHECKER_BOARD = 0
+    SYMMETRIC_CIRCLES_GRID = 1
+    ASYMMETRIC_CIRCLES_GRID = 2
 
 
 class Movie2ImgParameters(object):
@@ -66,6 +72,10 @@ class CalculationParameters(object):
         return cls.PATH
 
     @property
+    def pattern(self):
+        return self.__pattern
+
+    @property
     def square_size(self):
         return self.__square_size
 
@@ -93,6 +103,7 @@ class CalculationParameters(object):
 
     def __deserialize(self):
         """yamlファイルからparamを読み取る"""
+        self.__pattern = int(self.__yaml_data["pattern"])
         self.__square_size = int(self.__yaml_data["square_size"])
         self.__cross_point = (
             int(self.__yaml_data["cross_point"]["vertical"]),
@@ -139,8 +150,8 @@ class CalibrationParameters(object):
         self.__input_dir = str(self.__yaml_data["before_calib"]["input_dir"])
         self.__ext = self.__yaml_data["before_calib"]["ext"]
         self.__movie_mode = bool(int(self.__yaml_data["after_calib"]["movie_mode"]))
-        self.__left_title = bool(int(self.__yaml_data["after_calib"]["left_title"]))
-        self.__right_title = bool(int(self.__yaml_data["after_calib"]["right_title"]))
+        self.__left_title = str(self.__yaml_data["after_calib"]["title_left"])
+        self.__right_title = str(self.__yaml_data["after_calib"]["title_right"])
 
 
 class CalibrationMatrix(object):

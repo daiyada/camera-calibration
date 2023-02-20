@@ -154,3 +154,6 @@ config/calibration_param.npz
 
 # venv
 .calib-env/
+
+# corner images
+draw_corner/

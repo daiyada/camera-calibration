@@ -1,9 +1,16 @@
+# grid pattern  0: Checkerboard, 1: Symmetric Circles Grid, 2: Asymmetric Circles Grid
+pattern: 2 
+
 square_size: 2.0          # unit [cm]
-cross_point:            # calibration用チェッカーボードのマスの数
-  horizontal: 7
-  vertical: 9
+
+# Checkerboardの場合交差点の数
+# Asymmetric Circles Gridの場合交差点の数
+# 画像上にあるトータルの交差点数より少なく設定する
+cross_point:            
+  horizontal: 5
+  vertical: 4
 img:
-  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/imgs_for_calc_param"
+  input_dir: "/home/hishida/01_Project/03_Toppan/Data/ForCalibration/きらきらロボモン①_temi0101"
   extension: "jpg"
 output:
   file_name: calibration_param    # 求めたcalibration用paramterを書き出すファイルの名前

@@ -1,10 +1,11 @@
 before_calib:
-  input_dir: "/home/hishida/10_project_in_progress/016_ベローチェ/004_script/camera-calibration/before"
+  input_dir: "/home/hishida/01_Project/03_Toppan/Data/Takseshiba_original/きらきらロボモン①/Recog_2022-10-30 11:30:00_2022-10-30 11:40:00"
   ext:          # input_dir内で処理をかけたいファイルの拡張子を列挙
     - avi
+    - mp4
     - png
 after_calib:
-  movie_mode: 1      # 動画ファイルをcalibrationするとき
+  movie_mode: 0      # 動画ファイルをcalibrationするとき
                      # 0: calibrationした動画データのみ生成
                      # 1: 元の動画と並べて再生するデータを生成
   title_left: "ORIGINAL"      # concatenateした時の左側動画タイトル

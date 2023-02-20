@@ -106,7 +106,7 @@ def main():
             calibrate_movie(calib, file_path, save_path)
             print("動画の保存完了")
             # 以下、movie_mode = Trueならばcalib前後の動画をconcatenateする
-            if config.getMovieMode:
+            if config.movie_mode:
                 print("元動画との連結開始")
                 cpm = CalibedPathMaker(file_path, initial="concatenated")
                 concatatenate_movie(file_path, save_path, cpm.path, config.left_title, config.right_title)
