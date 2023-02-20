@@ -10,7 +10,7 @@ import os
 class FilePathGetter(object):
 
     @property
-    def getFileList(self): return self.__file_list
+    def file_list(self): return self.__file_list
 
     def __init__(self, dir_path, ext_list):
         """

@@ -8,7 +8,7 @@
 import os
 
 import cv2
-from config.cfg_manager import ReadMovieConcatenater
+from utils.cfg_manager import MovieConcatenaterParameters
 
 
 class MovieConcatenater(object):
@@ -167,22 +167,22 @@ class MovieConcatenater(object):
 
 def main():
     """メイン関数"""
-    config = ReadMovieConcatenater(ReadMovieConcatenater.getYamlPath())
+    config = MovieConcatenaterParameters(MovieConcatenaterParameters.get_yaml_path())
     save_path = os.path.join(
-        config.getOnputPath, "{}.{}".format(config.getFileName, config.getExtension)
+        config.output_path, "{}.{}".format(config.file_name, config.extension)
     )
     MovieConcatenater(
-        config.getConcateType,
-        config.getArrangement,
+        config.concate_type,
+        config.arrangement,
         save_path,
-        path_1=config.getInputPath1,
-        path_2=config.getInputPath2,
-        path_3=config.getInputPath3,
-        path_4=config.getInputPath4,
-        title_1=config.getTitle1,
-        title_2=config.getTitle2,
-        title_3=config.getTitle3,
-        title_4=config.getTitle4,
+        path_1=config.input_path1,
+        path_2=config.input_path2,
+        path_3=config.input_path3,
+        path_4=config.input_path4,
+        title_1=config.title1,
+        title_2=config.title2,
+        title_3=config.title3,
+        title_4=config.title4,
     )
 
 

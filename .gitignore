@@ -151,3 +151,6 @@ after
 
 # Npz file including parameters for camera calibration
 config/calibration_param.npz
+
+# venv
+.calib-env/

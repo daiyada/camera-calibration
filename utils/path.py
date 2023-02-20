@@ -9,7 +9,7 @@ import os
 class ConfigPathMaker(object):
 
     @property
-    def getPath(self): return self.__path
+    def path(self): return self.__path
 
     def __init__(self, file_name, ext):
         """Constructor"""
@@ -20,10 +20,10 @@ class ConfigPathMaker(object):
 class CalibedPathMaker(object):
 
     @property
-    def getExt(self): return self.__ext
+    def extention(self): return self.__ext
 
     @property
-    def getPath(self): return self.__path
+    def path(self): return self.__path
 
     def __init__(self, path, initial="calibrated"):
         """Constructor"""
@@ -35,7 +35,7 @@ class CalibedPathMaker(object):
 class ImgForCalibPathMaker(object):
 
     @property
-    def getPath(self): return self.__path
+    def path(self): return self.__path
 
     def __init__(self, file_name, ext):
         """Constructor"""

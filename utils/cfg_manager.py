@@ -11,35 +11,35 @@ import numpy as np
 from inout.load import Loader
 
 
-class ReadMovie2Img(object):
+class Movie2ImgParameters(object):
     PATH = os.path.join(os.getcwd(), "config", "movie2img.yaml")
 
     @classmethod
-    def getYamlPath(cls):
+    def get_yaml_path(cls):
         return cls.PATH
 
     @property
-    def getStartTime(self):
+    def start_time(self):
         return self.__start_time
 
     @property
-    def getEndTime(self):
+    def end_time(self):
         return self.__end_time
 
     @property
-    def getOutputNumber(self):
+    def output_number(self):
         return self.__output_number
 
     @property
-    def getCutFlag(self):
+    def cut_flag(self):
         return self.__cut_flag
 
     @property
-    def getExtension(self):
+    def extension(self):
         return self.__extension
 
     @property
-    def getInputPath(self):
+    def input_path(self):
         return self.__input_path
 
     def __init__(self, path):
@@ -58,31 +58,31 @@ class ReadMovie2Img(object):
         self.__input_path = str(self.__yaml_data["input_path"])
 
 
-class ReadCalculation(object):
+class CalculationParameters(object):
     PATH = os.path.join(os.getcwd(), "config", "calc_camera_param.yaml")
 
     @classmethod
-    def getYamlPath(cls):
+    def get_yaml_path(cls):
         return cls.PATH
 
     @property
-    def getSquareSize(self):
+    def square_size(self):
         return self.__square_size
 
     @property
-    def getCrossPoint(self):
+    def cross_point(self):
         return self.__cross_point
 
     @property
-    def getImgDir(self):
+    def img_dir(self):
         return self.__img_dir
 
     @property
-    def getImgExt(self):
+    def img_extention(self):
         return self.__img_ext
 
     @property
-    def getFileName(self):
+    def file_name(self):
         return self.__file_name
 
     def __init__(self, path):
@@ -103,31 +103,31 @@ class ReadCalculation(object):
         self.__file_name = str(self.__yaml_data["output"]["file_name"])
 
 
-class ReadCalibration(object):
+class CalibrationParameters(object):
     PATH = os.path.join(os.getcwd(), "config", "calibration.yaml")
 
     @classmethod
-    def getYamlPath(cls):
+    def get_yaml_path(cls):
         return cls.PATH
 
     @property
-    def getInputDir(self):
+    def input_dir(self):
         return self.__input_dir
 
     @property
-    def getExtension(self):
+    def extension(self):
         return self.__ext
 
     @property
-    def getMovieMode(self):
+    def movie_mode(self):
         return self.__movie_mode
 
     @property
-    def getRightTitle(self):
+    def right_title(self):
         return self.__right_title
 
     @property
-    def getLeftTitle(self):
+    def left_title(self):
         return self.__left_title
 
     def __init__(self, path):
@@ -143,19 +143,19 @@ class ReadCalibration(object):
         self.__right_title = bool(int(self.__yaml_data["after_calib"]["right_title"]))
 
 
-class ReadCalibrationParam(object):
+class CalibrationMatrix(object):
     PATH = os.path.join(os.getcwd(), "config", "calibration_param.npz")
 
     @classmethod
-    def getNpzPath(cls):
+    def get_npz_path(cls):
         return cls.PATH
 
     @property
-    def getCameraMatrix(self):
+    def camera_matrix(self):
         return self.__camera_matrix
 
     @property
-    def getDistortion(self):
+    def distortion(self):
         return self.__distortion
 
     def __init__(self, path):
@@ -168,27 +168,27 @@ class ReadCalibrationParam(object):
         self.__distortion = calib_param["distortion"]
 
 
-class ReadMovieCutter(object):
+class MovieCutterParameters(object):
     PATH = os.path.join(os.getcwd(), "config", "movie_cutter.yaml")
 
     @classmethod
-    def getYamlPath(cls):
+    def get_yaml_path(cls):
         return cls.PATH
 
     @property
-    def getStartTime(self):
+    def start_time(self):
         return self.__start_time
 
     @property
-    def getEndTime(self):
+    def end_time(self):
         return self.__end_time
 
     @property
-    def getInputPath(self):
+    def input_path(self):
         return self.__input_path
 
     @property
-    def getOutputDir(self):
+    def output_dir(self):
         return self.__output_dir
 
     def __init__(self, path):
@@ -204,63 +204,63 @@ class ReadMovieCutter(object):
         self.__output_dir = str(self.__yaml_data["output_dir"])
 
 
-class ReadMovieConcatenater(object):
+class MovieConcatenaterParameters(object):
     PATH = os.path.join(os.getcwd(), "config", "movie_concatenater.yaml")
 
     @classmethod
-    def getYamlPath(cls):
+    def get_yaml_path(cls):
         return cls.PATH
 
     @property
-    def getConcateType(self):
+    def concate_type(self):
         return self.__concate_type
 
     @property
-    def getArrangement(self):
+    def arrangement(self):
         return self.__arrangement
 
     @property
-    def getInputPath1(self):
+    def input_path1(self):
         return self.__input_path_1
 
     @property
-    def getInputPath2(self):
+    def input_path2(self):
         return self.__input_path_2
 
     @property
-    def getInputPath3(self):
+    def input_path3(self):
         return self.__input_path_3
 
     @property
-    def getInputPath4(self):
+    def input_path4(self):
         return self.__input_path_4
 
     @property
-    def getOnputPath(self):
+    def output_path(self):
         return self.__output_path
 
     @property
-    def getFileName(self):
+    def file_name(self):
         return self.__file_name
 
     @property
-    def getExtension(self):
+    def extension(self):
         return self.__extension
 
     @property
-    def getTitle1(self):
+    def title1(self):
         return self.__title_1
 
     @property
-    def getTitle2(self):
+    def title2(self):
         return self.__title_2
 
     @property
-    def getTitle3(self):
+    def title3(self):
         return self.__title_3
 
     @property
-    def getTitle4(self):
+    def title4(self):
         return self.__title_4
 
     def __init__(self, path):
@@ -269,7 +269,7 @@ class ReadMovieConcatenater(object):
         self.__yaml_data = self.__load.loadYaml()
         self.__deserialize()
 
-    def __checkPath(self):
+    def __check_path(self):
         if not bool(self.__input_path_1) or not bool(self.__input_path_2):
             print("[ERROR]画像パス1, 2が未入力")
             raise Exception
@@ -292,4 +292,4 @@ class ReadMovieConcatenater(object):
         self.__title_2 = self.__yaml_data["output"]["title_2"]
         self.__title_3 = self.__yaml_data["output"]["title_3"]
         self.__title_4 = self.__yaml_data["output"]["title_4"]
-        self.__checkPath()
+        self.__check_path()

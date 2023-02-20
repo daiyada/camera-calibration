@@ -8,7 +8,7 @@ import os
 
 import cv2
 
-from config.cfg_manager import ReadMovieCutter
+from utils.cfg_manager import MovieCutterParameters
 
 def setOutputFormat(movie, save_path):
     """
@@ -55,9 +55,9 @@ def cutMovie(data_path, start_time, end_time, save_path):
 
 def main():
     """メイン関数"""
-    rmc = ReadMovieCutter(ReadMovieCutter.getYamlPath())
-    save_path = os.path.join(rmc.getOutputDir, "cut_{}".format(os.path.basename(rmc.getInputPath)))
-    cutMovie(rmc.getInputPath, rmc.getStartTime, rmc.getEndTime, save_path)
+    rmc = MovieCutterParameters(MovieCutterParameters.get_yaml_path())
+    save_path = os.path.join(rmc.output_dir, "cut_{}".format(os.path.basename(rmc.input_path)))
+    cutMovie(rmc.input_path, rmc.start_time, rmc.end_time, save_path)
 
 if __name__ == "__main__":
     main()

@@ -4,16 +4,13 @@
 
 @author Shunsuke Hishida / created on 2021/05/26
 """
-import os
-
 import cv2
-from tqdm import tqdm
 
-from config.cfg_manager import ReadMovie2Img
+from utils.cfg_manager import Movie2ImgParameters
 from utils.path import ImgForCalibPathMaker
 
 
-def cutIntervally(cap, start_time, end_time, output_number, ext):
+def cut_intervally(cap, start_time, end_time, output_number, ext):
     """
     @brief 一定間隔に切り出す
     """
@@ -35,13 +32,13 @@ def cutIntervally(cap, start_time, end_time, output_number, ext):
         ret, img = cap.read()   # img: (numpy.ndarray)
         if ret:
             path_maker = ImgForCalibPathMaker(index, ext)
-            save_path = path_maker.getPath
+            save_path = path_maker.path
             cv2.imwrite(save_path, img)
         else:
             break
     cap.release()
 
-def cutAll(cap, ext):
+def cut_all(cap, ext):
     """
     @brief 全フレーム切り出す
     """
@@ -50,20 +47,20 @@ def cutAll(cap, ext):
         ret, img = cap.read()
         if ret:
             path_maker = ImgForCalibPathMaker(index, ext)
-            save_path = path_maker.getPath
+            save_path = path_maker.path
             cv2.imwrite(save_path, img)
             index += 1
         else:
             break
     cap.release()
 
-def cutImg():
+def cut_img():
     """
     @param movie_path (str) 動画ファイルのパス
     @param config (class) 出力する画像に関するオプション
     """
-    config = ReadMovie2Img(ReadMovie2Img.getYamlPath())
-    cap = cv2.VideoCapture(config.getInputPath)
+    config = Movie2ImgParameters(Movie2ImgParameters.get_yaml_path())
+    cap = cv2.VideoCapture(config.input_path)
     if not cap.isOpened():
         return
     """
@@ -73,17 +70,17 @@ def cutImg():
     よって現状はこの処理を省いている
     """
     # os.makedirs(output_dir, exist_ok=True)
-    if config.getCutFlag:
-        cutAll(cap, config.getExtension)
+    if config.cut_flag:
+        cut_all(cap, config.extension)
     else:
-        cutIntervally(
+        cut_intervally(
                     cap,
-                    config.getStartTime,
-                    config.getEndTime,
-                    config.getOutputNumber,
-                    config.getExtension
+                    config.start_time,
+                    config.end_time,
+                    config.output_number,
+                    config.extension
                     )
     print("DONE")
 
 if __name__ == "__main__":
-    cutImg()
+    cut_img()

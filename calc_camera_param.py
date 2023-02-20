@@ -11,21 +11,21 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
-from config.cfg_manager import ReadCalculation
+from utils.cfg_manager import CalculationParameters
 from inout.save import Saver
 from utils.path import ConfigPathMaker
 
 class CalcCameraParam(object):
     def __init__(self):
         """Constructor"""
-        self.__param = ReadCalculation(ReadCalculation.getYamlPath())
+        self.__param = CalculationParameters(CalculationParameters.get_yaml_path())
 
         # チェッカーボードの角の座標の算出
-        self.__checker_coords = np.zeros((np.prod(self.__param.getCrossPoint), 3), np.float32)
-        self.__checker_coords[:,:2] = np.indices(self.__param.getCrossPoint).T.reshape(-1, 2)
-        self.__checker_coords *= self.__param.getSquareSize
+        self.__checker_coords = np.zeros((np.prod(self.__param.cross_point), 3), np.float32)
+        self.__checker_coords[:,:2] = np.indices(self.__param.cross_point).T.reshape(-1, 2)
+        self.__checker_coords *= self.__param.square_size
 
-    def __calcParam(self, img_list):
+    def __calc_param(self, img_list):
         """
         @brief キャリブレーションに必要なパラメータ４つ（戻り値）を算出
         @param parameterを算出するのに用いる画像群（チェッカーボード）
@@ -57,12 +57,12 @@ class CalcCameraParam(object):
 
     def execute(self):
         """メイン関数"""
-        img_list = glob.glob(os.path.join(self.__param.getImgDir, "*.{}".format(self.__param.getImgExt)))
-        camera_matrix, distortion, _, _ = self.__calcParam(img_list)
-        cpm = ConfigPathMaker(self.__param.getFileName, ext="npz")
+        img_list = glob.glob(os.path.join(self.__param.img_dir, "*.{}".format(self.__param.img_extention)))
+        camera_matrix, distortion, _, _ = self.__calc_param(img_list)
+        cpm = ConfigPathMaker(self.__param.file_name, ext="npz")
         # 計算したparameterをnpzファイルに保存
-        save = Saver(cpm.getPath, camera_matrix=camera_matrix, distortion=distortion)
-        save.saveNpz()
+        save = Saver(cpm.path, camera_matrix=camera_matrix, distortion=distortion)
+        save.save_npz()
         print("Done!!")
 
 if __name__ == "__main__":

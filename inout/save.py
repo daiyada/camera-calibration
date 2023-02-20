@@ -13,7 +13,7 @@ class Saver(object):
         self.__path = path
         self.__data = kwargs
 
-    def saveNpz(self):
+    def save_npz(self):
         np.savez(
             self.__path,
             camera_matrix=self.__data["camera_matrix"],
