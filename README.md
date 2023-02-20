@@ -23,4 +23,4 @@ paramを算出するのに用いる画像（チェッカーボード）からpar
 
 ## Calibration後出力イメージ
 - 動画／calibration前後の動画をconcatenateしたもの  
-[concatenated_video.avi](/sample/concatenated_video.avi)
+![concatenated_video.gif](/sample/concatenated_video.gif)
