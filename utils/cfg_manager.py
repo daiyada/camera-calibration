@@ -72,16 +72,21 @@ class CalculationParameters(object):
         return cls.PATH
 
     @property
-    def pattern(self):
-        return self.__pattern
+    def grid_interval(self):
+        return self.__grid_interval
 
     @property
-    def square_size(self):
-        return self.__square_size
+    def grid_num_tuple(self):
+        """self.__grid_num_tuple = (vertical_num., horizontal_nnum)"""
+        return self.__grid_num_tuple
 
     @property
-    def cross_point(self):
-        return self.__cross_point
+    def horizontal_grid_num(self):
+        return int(self.__yaml_data["grid_num"]["horizontal"])
+
+    @property
+    def vertical_grid_num(self):
+        return int(self.__yaml_data["grid_num"]["vertical"])
 
     @property
     def img_dir(self):
@@ -95,6 +100,10 @@ class CalculationParameters(object):
     def file_name(self):
         return self.__file_name
 
+    @property
+    def circle_radius(self):
+        return float(self.__yaml_data["circle_radius"])
+
     def __init__(self, path):
         """Constructor"""
         self.__load = Loader(path)
@@ -103,11 +112,10 @@ class CalculationParameters(object):
 
     def __deserialize(self):
         """yamlファイルからparamを読み取る"""
-        self.__pattern = int(self.__yaml_data["pattern"])
-        self.__square_size = int(self.__yaml_data["square_size"])
-        self.__cross_point = (
-            int(self.__yaml_data["cross_point"]["vertical"]),
-            int(self.__yaml_data["cross_point"]["horizontal"]),
+        self.__grid_interval = int(self.__yaml_data["grid_interval"])
+        self.__grid_num_tuple = (
+            int(self.__yaml_data["grid_num"]["vertical"]),
+            int(self.__yaml_data["grid_num"]["horizontal"]),
         )
         self.__img_dir = str(self.__yaml_data["img"]["input_dir"])
         self.__img_ext = str(self.__yaml_data["img"]["extension"])

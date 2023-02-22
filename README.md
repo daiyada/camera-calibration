@@ -11,8 +11,15 @@ $ pip install -r requirements.txt
 - movie2img.py / 【設定ファイル】： config/movie2img.yaml  
 カメラキャリブレーションのparamを算出するのに用いる画像（チェッカーボード）を切り出す。/***imgs_for_calc_param/*** に切り出した画像が出力される
 
-- calc_camera_param.py / 【設定ファイル】： config/calc_camera_param.yaml  
-paramを算出するのに用いる画像（チェッカーボード）からparamを算出する。算出したparamは***config/calibration_param.npz***に保存される
+- calc_camera_param.py -p (int) / 【設定ファイル】： config/calc_camera_param.yaml  
+    - paramを算出するのに用いる画像（チェッカーボード）からparamを算出する。算出したparamは***config/calibration_param.npz***に保存される
+    - -p 以下は parameter を算出するために用いる Grid Pattern によって決める
+        - CheckerBoard: 0
+        ![CheckerBoard](grid/checker_board.png)
+        - SymmetricCirclesGrid: 1
+        ![SymmetricCirclesGrid](grid/symmetric_circles_grid.png)
+        - AsymmetricCirclesGrid: 2
+        ![AsymmetricCirclesGrid](grid/asymmetric_circles_grid.png)
 
 - calibration.py / 【設定ファイル】： config/calibration.yaml  
 特定の画像、動画に対して***config/calibration_param.npz***に格納したparamをもとにcalibrationを行う。出力データは　***after/***に格納される
