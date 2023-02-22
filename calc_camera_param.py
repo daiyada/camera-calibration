@@ -124,16 +124,16 @@ class SymmetricCirclesGrid(CameraParamCalculator):
             ↑
             vertical_index
         =====
-        iの対応関係
+        iの対応関係; cv2.findCirclesGridの戻り値 corners と index をリンクさせる
             　　０ １ ２ ３ ４ ５ ６ ７ ８ ９  <- horizontal_index
             　┌ー ー ー ー ー ー ー ー ー ー
-            ０｜０ ７ 14 21 28 35 42 49 56 63
-            １｜１ ８ 15 22 29 36 43 50 57 64
-            ２｜２ ９ 16 23 30 37 44 51 58 65
+            ０｜６ 13 20 27 34 41 48 55 62 69
+            １｜５ 12 18 26 33 40 47 54 61 68
+            ２｜４ 11 17 25 32 39 46 53 60 67
             ３｜３ 10 17 24 31 38 45 52 59 66
-            ４｜４ 11 18 25 32 39 46 53 60 67
-            ５｜５ 12 19 26 33 40 47 54 61 68
-            ６｜６ 13 20 27 34 41 48 55 62 69
+            ４｜２ ９ 16 23 30 37 44 51 58 65
+            ５｜１ ８ 15 22 29 36 43 50 57 64
+            ６｜０ ７ 14 21 28 35 42 49 56 63
 
             ↑
             vertical_index
@@ -144,13 +144,13 @@ class SymmetricCirclesGrid(CameraParamCalculator):
         for i in range(np.prod(self._params.grid_num_tuple)):
             if (i % self._params.vertical_grid_num == 0) and (i != 0):
                 horizontal_index += 1
-                vertical_index = 0
+                vertical_index = self._params.vertical_grid_num * 2 - 1
             self.__checker_coords[i][:2] = (
                 self._params.grid_interval * horizontal_index,
                 self._params.grid_interval * vertical_index
                 )
-            # 垂直方向に隣り合う i は vertical_index を +1 する必要あり
-            vertical_index += 1
+            # 垂直方向に隣り合う i は vertical_index を -2 する必要あり
+            vertical_index -= 2
 
     def calculate(self, img_list: list, save_result: bool = True):
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.001)
@@ -202,36 +202,36 @@ class AsymmetricCirclesGrid(CameraParamCalculator):
             ↑
             vertical_index
         =====
-        iの対応関係
+        iの対応関係; cv2.findCirclesGridの戻り値 corners と index をリンクさせる
             　　０１２３４５６７８９10  <- horizontal_index
             　┌ーーーーーーーーーー
-            ０｜　４　12　20　28　36　
-            １｜０　８　16　24　32　40
-            ２｜　５　13　21　29　37　
-            ３｜１　９　17　25　33　41
-            ４｜　６　14　22　30　38　
-            ５｜２　10　18　26　34　42
-            ６｜　７　15　23　31　39　
-            ７｜３　11　19　27　35　43
+            ０｜　７　15　23　31　39　
+            １｜３　11　19　27　35　43
+            ２｜　６　14　22　30　38　
+            ３｜２　10　18　26　34　42
+            ４｜　５　13　21　29　37　
+            ５｜１　９　17　25　33　41
+            ６｜　４　12　20　28　36　
+            ７｜０　８　16　24　32　40
             ↑
             vertical_index
         """
         self.__checker_coords = np.zeros((np.prod(self._params.grid_num_tuple), 3), np.float32)
         horizontal_index = 0
-        vertical_index = 1
+        vertical_index = self._params.vertical_grid_num * 2 - 1
         for i in range(np.prod(self._params.grid_num_tuple)):
             if (i % self._params.vertical_grid_num == 0) and (i != 0):
                 horizontal_index += 1
                 if horizontal_index % 2 == 0:
-                    vertical_index = 1
+                    vertical_index = self._params.vertical_grid_num * 2 - 1
                 else:
-                    vertical_index = 0
+                    vertical_index = self._params.vertical_grid_num * 2 - 2
             self.__checker_coords[i][:2] = (
                 self._params.grid_interval/2 * horizontal_index,
                 self._params.grid_interval/2 * vertical_index
                 )
             # 垂直方向に隣り合う i は vertical_index を +2 する必要あり
-            vertical_index += 2
+            vertical_index -= 2
 
     def calculate(self, img_list: list, save_result: bool = True):
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.001)
@@ -245,7 +245,6 @@ class AsymmetricCirclesGrid(CameraParamCalculator):
             img_with_keypoints = cv2.drawKeypoints(img, key_points, np.array([]), (0,255,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             img_with_keypoints_gray = cv2.cvtColor(img_with_keypoints, cv2.COLOR_BGR2GRAY)
             ret, corners = cv2.findCirclesGrid(img_with_keypoints, self._params.grid_num_tuple, None, flags = cv2.CALIB_CB_ASYMMETRIC_GRID)
-
             if ret:
                 obj_coords.append(self.__checker_coords)
                 img_coords.append(corners)

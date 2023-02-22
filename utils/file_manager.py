@@ -21,4 +21,4 @@ class FilePathGetter(object):
         for ext in ext_list:
             file_list = glob.glob(os.path.join(dir_path, "*.{}".format(ext)))
             self.__file_list.extend(file_list)
-
+            

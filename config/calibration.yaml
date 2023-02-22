@@ -4,8 +4,9 @@ before_calib:
     - avi
     - mp4
     - png
+    - jpg
 after_calib:
-  movie_mode: 0      # 動画ファイルをcalibrationするとき
+  movie_mode: 1      # 動画ファイルをcalibrationするとき
                      # 0: calibrationした動画データのみ生成
                      # 1: 元の動画と並べて再生するデータを生成
   title_left: "ORIGINAL"      # concatenateした時の左側動画タイトル

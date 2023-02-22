@@ -3,7 +3,8 @@
 # ●⇔●  ●  ●  ●  ●
 # ⇕●　●　●　●　●　
 # ●　●　●　●　●　●
-grid_interval: 4.0          # unit [cm]
+# [ unit : mm ]
+grid_interval: 40
 
 # Gridの数
 # SymmetricCirclesGrid, AsymmetricCirclesGrid の場合は Circle の数を指す
