@@ -108,11 +108,73 @@ class SymmetricCirclesGrid(CameraParamCalculator):
         self._make_board()
 
     def _make_board(self):
-        pass
+        """
+        EX) grid_num = (horizontal_grid_num, vertical_grid_num) = (10, 7) の場合
+        =====
+            　　０ １ ２ ３ ４ ５ ６ ７ ８ ９  <- horizontal_index
+            　┌ー ー ー ー ー ー ー ー ー ー
+            ０｜● ● ● ● ● ● ● ● ● ●
+            １｜● ● ● ● ● ● ● ● ● ●
+            ２｜● ● ● ● ● ● ● ● ● ●
+            ３｜● ● ● ● ● ● ● ● ● ●
+            ４｜● ● ● ● ● ● ● ● ● ●
+            ５｜● ● ● ● ● ● ● ● ● ●
+            ６｜● ● ● ● ● ● ● ● ● ●
 
-    def calculate(self):
-        # TODO 実装
-        pass
+            ↑
+            vertical_index
+        =====
+        iの対応関係
+            　　０ １ ２ ３ ４ ５ ６ ７ ８ ９  <- horizontal_index
+            　┌ー ー ー ー ー ー ー ー ー ー
+            ０｜０ ７ 14 21 28 35 42 49 56 63
+            １｜１ ８ 15 22 29 36 43 50 57 64
+            ２｜２ ９ 16 23 30 37 44 51 58 65
+            ３｜３ 10 17 24 31 38 45 52 59 66
+            ４｜４ 11 18 25 32 39 46 53 60 67
+            ５｜５ 12 19 26 33 40 47 54 61 68
+            ６｜６ 13 20 27 34 41 48 55 62 69
+
+            ↑
+            vertical_index
+        """
+        self.__checker_coords = np.zeros((np.prod(self._params.grid_num_tuple), 3), np.float32)
+        horizontal_index = 0
+        vertical_index = 0
+        for i in range(np.prod(self._params.grid_num_tuple)):
+            if (i % self._params.vertical_grid_num == 0) and (i != 0):
+                horizontal_index += 1
+                vertical_index = 0
+            self.__checker_coords[i][:2] = (
+                self._params.grid_interval * horizontal_index,
+                self._params.grid_interval * vertical_index
+                )
+            # 垂直方向に隣り合う i は vertical_index を +1 する必要あり
+            vertical_index += 1
+
+    def calculate(self, img_list: list, save_result: bool = True):
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.001)
+        obj_coords = []     # 3d point in real world space
+        img_coords = []     # 2d point in image space
+        for i, img_path in enumerate(tqdm(img_list)):
+            img = cv2.imread(img_path)
+            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            key_points = self._blob_detector.detect(gray_img)
+
+            img_with_keypoints = cv2.drawKeypoints(img, key_points, np.array([]), (0,255,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            img_with_keypoints_gray = cv2.cvtColor(img_with_keypoints, cv2.COLOR_BGR2GRAY)
+            ret, corners = cv2.findCirclesGrid(img_with_keypoints, self._params.grid_num_tuple, None, flags = cv2.CALIB_CB_SYMMETRIC_GRID)
+
+            if ret:
+                obj_coords.append(self.__checker_coords)
+                img_coords.append(corners)
+
+                #　制御点を描画した画像を確認したい場合は以下２行のコメントアウトを解除
+                if save_result:
+                    self._write_point(corners, img, img_with_keypoints_gray, criteria, ret, i)
+
+        _, camera_matrix, dist, rot_vecs, trans_vecs = cv2.calibrateCamera(obj_coords, img_coords, gray_img.shape[::-1], None, None)
+        return camera_matrix, dist, rot_vecs, trans_vecs
 
 
 class AsymmetricCirclesGrid(CameraParamCalculator):

@@ -1,9 +1,8 @@
-# Grid間の距離
+# Grid間の距離 ( 実寸値 )
 # AsymmetricCirclesGridの場合下記のような●の中心間距離( = 矢印 ) を入れる
 # ●⇔●  ●  ●  ●  ●
 # ⇕●　●　●　●　●　
 # ●　●　●　●　●　●
-            
 grid_interval: 4.0          # unit [cm]
 
 # Gridの数
